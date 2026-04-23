@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Anesthesia Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .logo {
+            display: block;
+            margin: 0 auto 20px auto;
+            max-height: 120px;
+        }
+        h2 {
+            color: #2e7d32;
+            border-bottom: 2px solid #c8e6c9;
+            padding-bottom: 5px;
+        }
+        .section {
+            margin-bottom: 30px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            background-color: #fafafa;
+        }
+        .form-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            gap: 10px;
+        }
+        label {
+            flex: 0 0 130px;
+            color: #555;
+            font-weight: bold;
+        }
+        input {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 15px;
+        }
+        .form-row input { flex: 1; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+        }
+        td input {
+            width: 100%;
+            box-sizing: border-box;
+            border: none;
+            padding: 6px;
+            background: transparent;
+        }
+        td input:focus { outline: 1px solid #4CAF50; background: #fff; }
+        td input:disabled {
+            background-color: #eee;
+            color: #555;
+        }
+        .calculated {
+            background-color: #c8e6c9 !important;
+            color: #1b5e20 !important;
+            font-weight: bold;
+        }
+        button {
+            margin-top: 10px;
+            padding: 8px 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        button:hover { background-color: #388E3C; }
+        .pdf-section {
+            margin-top: 20px;
+            text-align: center;
+        }
+        #pdf-btn {
+            background-color: #d32f2f;
+            font-size: 16px;
+            padding: 10px 20px;
+        }
+        #pdf-btn:hover { background-color: #b71c1c; }
+    </style>
+    <!-- html2pdf.js: renders a DOM element into a PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+<body>
+<div class="container">
+
+    <!-- Logo -->
+    <img src="data:image/png;base64,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" alt="Logo" class="logo">
+
+    <!-- ========= SECTION 1: Patient Info ========= -->
+    <div class="section">
+        <h2>Patient Info</h2>
+        <div class="form-row">
+            <label for="name">Name:</label>
+            <input type="text" id="name">
+        </div>
+        <div class="form-row">
+            <label for="date">Date:</label>
+            <input type="date" id="date">
+        </div>
+        <div class="form-row">
+            <label for="weight">Weight (lbs):</label>
+            <input type="number" id="weight" step="0.1" value="0">
+        </div>
+        <div class="form-row">
+            <label for="startTime">Start time:</label>
+            <input type="time" id="startTime">
+        </div>
+    </div>
+
+    <!-- ========= SECTION 2: Drugs ========= -->
+    <div class="section">
+        <h2>Drugs</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Drug name</th>
+                    <th>Dose (mg/lb)</th>
+                    <th>mg</th>
+                </tr>
+            </thead>
+            <tbody id="drugs-body"></tbody>
+        </table>
+    </div>
+
+    <!-- ========= SECTION 3: Anesthesia Monitoring ========= -->
+    <div class="section">
+        <h2>Anesthesia monitoring</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 110px;">Time</th>
+                    <th style="width: 160px;">Step</th>
+                    <th>Notes</th>
+                    <th style="width: 140px;">Time since start</th>
+                </tr>
+            </thead>
+            <tbody id="monitoring-body"></tbody>
+        </table>
+        <button id="add-row-btn">+ Add row</button>
+    </div>
+
+    <!-- ========= PDF Export ========= -->
+    <div class="pdf-section" id="pdf-section">
+        <button id="pdf-btn">📄 Download as PDF</button>
+    </div>
+
+</div>
+
+<script>
+    // ====== CONFIG: edit to change the drug list / doses ======
+    const DRUGS = [
+        { name: "Aspirin", dose: 0.5 },   // dose in mg/lb
+        { name: "Advil",   dose: 1.0 }
+    ];
+    // ============================================================
+
+    // ---------- Section 2: Drugs ----------
+    function buildDrugRow(drug, index) {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td><input type="text" value="${drug.name}" disabled></td>
+            <td><input type="number" value="${drug.dose}" disabled></td>
+            <td><input type="text" id="mg-${index}" class="calculated" disabled></td>
+        `;
+        return tr;
+    }
+
+    function updateDrugCalculations() {
+        const weight = parseFloat(document.getElementById('weight').value) || 0;
+        DRUGS.forEach((drug, index) => {
+            const mg = weight * drug.dose;
+            document.getElementById(`mg-${index}`).value = mg.toFixed(2);
+        });
+    }
+
+    // ---------- Section 3: Monitoring ----------
+    // Returns "Hh Mm" string given two "HH:MM" strings
+    function computeElapsed(startTime, currentTime) {
+        if (!startTime || !currentTime) return '';
+        const [sh, sm] = startTime.split(':').map(Number);
+        const [ch, cm] = currentTime.split(':').map(Number);
+        let totalMinutes = (ch * 60 + cm) - (sh * 60 + sm);
+        if (totalMinutes < 0) totalMinutes += 24 * 60; // past midnight
+        const hours = Math.floor(totalMinutes / 60);
+        const minutes = totalMinutes % 60;
+        return `${hours}h ${minutes}m`;
+    }
+
+    function addMonitoringRow() {
+        const tbody = document.getElementById('monitoring-body');
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td><input type="time" class="mon-time"></td>
+            <td><input type="text" class="mon-step"></td>
+            <td><input type="text" class="mon-notes"></td>
+            <td><input type="text" class="mon-elapsed calculated" disabled></td>
+        `;
+        tbody.appendChild(tr);
+
+        // Update elapsed when the time for this row changes
+        const timeInput = tr.querySelector('.mon-time');
+        const elapsedInput = tr.querySelector('.mon-elapsed');
+        timeInput.addEventListener('input', () => {
+            const start = document.getElementById('startTime').value;
+            elapsedInput.value = computeElapsed(start, timeInput.value);
+        });
+    }
+
+    // Recompute all row elapsed values (e.g., when start time changes)
+    function recomputeAllElapsed() {
+        const start = document.getElementById('startTime').value;
+        document.querySelectorAll('#monitoring-body tr').forEach(tr => {
+            const timeInput = tr.querySelector('.mon-time');
+            const elapsedInput = tr.querySelector('.mon-elapsed');
+            elapsedInput.value = computeElapsed(start, timeInput.value);
+        });
+    }
+
+    // ---------- PDF Export ----------
+    // Renders the entire form (as it currently looks) into a PDF.
+    function downloadPDF() {
+        // html2canvas reads input values from the HTML "value" attribute,
+        // not the live .value property. Sync them before capture.
+        document.querySelectorAll('input').forEach(inp => {
+            if (inp.type === 'text' || inp.type === 'number' ||
+                inp.type === 'date' || inp.type === 'time') {
+                inp.setAttribute('value', inp.value);
+            }
+        });
+
+        const name = (document.getElementById('name').value || 'report').replace(/\s+/g, '_');
+        const date = document.getElementById('date').value || 'nodate';
+        const filename = `anesthesia_${name}_${date}.pdf`;
+
+        // Hide interactive-only elements (buttons) so they don't appear in the PDF
+        const pdfSection = document.getElementById('pdf-section');
+        const addRowBtn  = document.getElementById('add-row-btn');
+        const prevPdf    = pdfSection.style.display;
+        const prevAdd    = addRowBtn.style.display;
+        pdfSection.style.display = 'none';
+        addRowBtn.style.display  = 'none';
+
+        const restore = () => {
+            pdfSection.style.display = prevPdf;
+            addRowBtn.style.display  = prevAdd;
+        };
+
+        const element = document.querySelector('.container');
+        const opt = {
+            margin:       [8, 8, 8, 8],
+            filename:     filename,
+            image:        { type: 'jpeg', quality: 0.98 },
+            html2canvas:  { scale: 2, useCORS: true },
+            jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
+            pagebreak:    { mode: ['css', 'legacy'] }
+        };
+
+        html2pdf().set(opt).from(element).save().then(restore).catch(restore);
+    }
+
+    // ---------- Init ----------
+    function init() {
+        // Build drug rows
+        const drugsBody = document.getElementById('drugs-body');
+        DRUGS.forEach((drug, index) => {
+            drugsBody.appendChild(buildDrugRow(drug, index));
+        });
+
+        // Wire up listeners
+        document.getElementById('weight').addEventListener('input', updateDrugCalculations);
+        document.getElementById('startTime').addEventListener('input', recomputeAllElapsed);
+        document.getElementById('add-row-btn').addEventListener('click', addMonitoringRow);
+        document.getElementById('pdf-btn').addEventListener('click', downloadPDF);
+
+        // Seed initial state
+        updateDrugCalculations();
+        addMonitoringRow(); // start with one empty row
+    }
+
+    init();
+</script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+I need you to create a html file (using html and java). This file will be a form that I will describe to you . At the top I would like it to have the logo stored as "logo.png" in this directory. Then it should have 3 sections.
+
+Section 1: In this section there should be teh following fillabe items:
+["Name", "Date", "weight(lbs)", "start time"]
+
+Section 2: In this section I need to have a number of rows each row correspoding to a drug.
+for now I want the following drugs:
+["Aspirin", "Advil"]
+Each row , apart from the name of the drug should have the following columns
+["drug name", "dose", "mg"]
+of these columns the following are frozen [drug name, dose], while "mg" is calculated as: mg = dose * weight(lbs)
+
+Section 3:
+This section is named "Anesthesia monitoring", and has columns that will be filled succesively by the user.
+The columns are:
+[time, step, notes , time since start]
+The fillable columns are [time step, notes]
+the calculated column is "time since start", and are calculated as follow:
+"time elapsed"= time-"start time" (this should be in hours and minutes format)
+
+Could you also add a button at the end that creates a readable version (text for example ) of all the final fields?
