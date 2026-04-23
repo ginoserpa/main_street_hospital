@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main Street Hospital — Anesthesia Form</title>
+    <style>
+        /* ---------- Design tokens ---------- */
+        :root {
+            --primary: #0d6efd;
+            --primary-dark: #0b5ed7;
+            --accent: #198754;
+            --accent-dark: #157347;
+            --danger: #dc3545;
+            --warning: #ffc107;
+            --bg: #eef2f7;
+            --surface: #ffffff;
+            --surface-alt: #f8fafc;
+            --text: #1f2937;
+            --text-muted: #6b7280;
+            --border: #d9dde3;
+            --border-strong: #b8c0cc;
+            --shadow: 0 2px 6px rgba(16, 24, 40, 0.06),
+                      0 8px 24px rgba(16, 24, 40, 0.06);
+            --radius: 10px;
+            --radius-sm: 6px;
+        }
+
+        /* ---------- Base ---------- */
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont,
+                         'Helvetica Neue', Arial, sans-serif;
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 20px;
+            background: linear-gradient(180deg, #eef2f7 0%, #e3eaf2 100%);
+            color: var(--text);
+            line-height: 1.5;
+        }
+
+        /* ---------- Logo ---------- */
+        .logo-wrapper {
+            text-align: center;
+            margin-bottom: 24px;
+            padding: 20px;
+            background: var(--surface);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        }
+        .logo-wrapper img {
+            max-height: 140px;
+            max-width: 100%;
+        }
+
+        /* ---------- Containers / sections ---------- */
+        .container {
+            background-color: var(--surface);
+            padding: 28px 32px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 24px;
+            border: 1px solid var(--border);
+            position: relative;
+        }
+        .container::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: var(--primary);
+            border-top-left-radius: var(--radius);
+            border-bottom-left-radius: var(--radius);
+        }
+
+        /* ---------- Typography ---------- */
+        h1 {
+            text-align: center;
+            color: var(--text);
+            margin: 0 0 8px;
+            font-size: 28px;
+            letter-spacing: 0.3px;
+        }
+        h2 {
+            color: var(--text);
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 8px;
+            margin: 0 0 20px;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        h3 {
+            color: var(--text);
+            margin: 24px 0 10px;
+            font-size: 16px;
+            padding-left: 10px;
+            border-left: 4px solid var(--accent);
+        }
+
+        /* ---------- Form layout ---------- */
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-bottom: 12px;
+        }
+        .form-group {
+            flex: 1 1 220px;
+            display: flex;
+            flex-direction: column;
+        }
+        label {
+            margin-bottom: 6px;
+            color: var(--text-muted);
+            font-weight: 600;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+        }
+        input, textarea {
+            padding: 10px 12px;
+            border: 1px solid var(--border-strong);
+            border-radius: var(--radius-sm);
+            font-size: 14px;
+            font-family: inherit;
+            background: var(--surface);
+            transition: border-color 0.15s, box-shadow 0.15s, background 0.15s;
+        }
+        input:hover, textarea:hover {
+            border-color: #8d97a6;
+        }
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.18);
+        }
+        input[readonly] {
+            background-color: #eaf5ef;
+            color: var(--accent-dark);
+            font-weight: 700;
+            border-color: #c7e2d4;
+            cursor: default;
+        }
+        input[readonly]:focus {
+            box-shadow: none;
+            border-color: #c7e2d4;
+        }
+
+        /* ---------- Tables ---------- */
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin-bottom: 16px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+        }
+        th, td {
+            padding: 10px 12px;
+            border-bottom: 1px solid var(--border);
+            text-align: left;
+            font-size: 14px;
+            vertical-align: middle;
+        }
+        tbody tr:last-child td { border-bottom: none; }
+        tbody tr:nth-child(even) td { background-color: var(--surface-alt); }
+        tbody tr:hover td { background-color: #f1f6fc; }
+        th {
+            background-color: #e9f0fb;
+            color: var(--primary-dark);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 12px;
+            border-bottom: 2px solid var(--primary);
+        }
+        td input {
+            width: 100%;
+            border: 1px solid transparent;
+            background: transparent;
+            padding: 6px 8px;
+            border-radius: 4px;
+        }
+        td input:hover { border-color: var(--border); }
+        td input:focus {
+            background: #fff;
+            border-color: var(--primary);
+        }
+        td input[readonly] {
+            background-color: #eaf5ef;
+            border-color: transparent;
+        }
+        td input[readonly]:hover { border-color: transparent; }
+        .monitor-table input { min-width: 80px; }
+
+        /* ---------- Buttons ---------- */
+        button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 22px;
+            border-radius: var(--radius-sm);
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-right: 10px;
+            margin-top: 10px;
+            transition: background 0.15s, transform 0.05s, box-shadow 0.15s;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.08);
+        }
+        button:hover {
+            background: var(--primary-dark);
+            box-shadow: 0 3px 8px rgba(13, 110, 253, 0.25);
+        }
+        button:active { transform: translateY(1px); }
+        button.secondary {
+            background: #ffffff;
+            color: var(--primary-dark);
+            border: 1px solid var(--primary);
+        }
+        button.secondary:hover {
+            background: #eff5ff;
+            box-shadow: 0 3px 8px rgba(13, 110, 253, 0.12);
+        }
+        button.accent {
+            background: var(--accent);
+        }
+        button.accent:hover {
+            background: var(--accent-dark);
+        }
+
+        /* ---------- Summary output ---------- */
+        #summary-output {
+            white-space: pre-wrap;
+            background-color: #0f172a;
+            color: #e2e8f0;
+            border: 1px solid #1e293b;
+            border-radius: var(--radius-sm);
+            padding: 18px;
+            margin-top: 16px;
+            font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+            font-size: 13px;
+            line-height: 1.55;
+            display: none;
+            overflow-x: auto;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.3);
+        }
+
+        /* ---------- Responsive ---------- */
+        @media (max-width: 640px) {
+            body { margin: 10px auto; padding: 10px; }
+            .container { padding: 18px; }
+            h2 { font-size: 18px; }
+            table { font-size: 13px; }
+            th, td { padding: 8px; }
+            button { width: 100%; margin-right: 0; }
+        }
+
+        /* ---------- Print ---------- */
+        @media print {
+            body { background: #fff; margin: 0; padding: 0; }
+            .container { box-shadow: none; border: 1px solid #ccc; page-break-inside: avoid; }
+            button { display: none; }
+            #summary-output { display: none !important; }
+            .container::before { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Logo -->
+    <div class="logo-wrapper">
+        <img src="logo.png" alt="Main Street Hospital Logo">
+    </div>
+
+    <!-- ==================== SECTION 1 ==================== -->
+    <div class="container">
+        <h2>Section 1 — Patient Information</h2>
+        <div class="form-row">
+            <div class="form-group">
+                <label for="client">Client</label>
+                <input type="text" id="client" placeholder="Client name">
+            </div>
+            <div class="form-group">
+                <label for="date">Date</label>
+                <input type="date" id="date">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group">
+                <label for="weightLbs">Weight (lbs)</label>
+                <input type="number" id="weightLbs" step="0.01" placeholder="e.g. 12.5">
+            </div>
+            <div class="form-group">
+                <label for="weightKgs">Weight (kgs) — calculated</label>
+                <input type="text" id="weightKgs" readonly>
+            </div>
+            <div class="form-group">
+                <label for="startTime">Start Time</label>
+                <input type="time" id="startTime">
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== SECTION 2 ==================== -->
+    <div class="container">
+        <h2>Section 2 — Drugs</h2>
+        <div id="drug-sections"></div>
+    </div>
+
+    <!-- ==================== SECTION 3 ==================== -->
+    <div class="container">
+        <h2>Section 3 — Anesthesia Monitoring</h2>
+        <table class="monitor-table">
+            <thead>
+                <tr>
+                    <th style="width:15%">Time</th>
+                    <th style="width:25%">Step</th>
+                    <th style="width:40%">Notes</th>
+                    <th style="width:20%">Time Since Start</th>
+                </tr>
+            </thead>
+            <tbody id="monitor-body"></tbody>
+        </table>
+        <button type="button" class="secondary" onclick="addMonitorRow()">+ Add Row</button>
+    </div>
+
+    <!-- ==================== SUMMARY BUTTON ==================== -->
+    <div class="container">
+        <button type="button" onclick="generateSummary()">Generate Readable Summary</button>
+        <button type="button" class="secondary" onclick="copySummary()">Copy Summary</button>
+        <pre id="summary-output"></pre>
+    </div>
+
+    <script>
+        // ============================================================
+        // DRUG CONFIGURATION
+        // Add or edit drugs here — the HTML is built automatically.
+        // ============================================================
+        const drugSections = [
+            {
+                title: 'Pre-Anesthetic Drugs',
+                drugs: [
+                    { name: 'Butorphanol',   strength: '10 mg/ml', dose: 0.2 },
+                    { name: 'Buprenorphine', strength: '0.3 mg/ml', dose: 0.02 },
+                ]
+            },
+            {
+                title: 'Induction Drugs',
+                drugs: [
+                    { name: 'Propofol', strength: '10 mg/ml', dose: 4 },
+                    { name: 'Alfaxan',  strength: '10 mg/ml', dose: 2 },
+                ]
+            },
+            {
+                title: 'Emergency Drugs',
+                drugs: [
+                    { name: 'Atropine',      strength: '0.54 mg/ml', dose: 0.04 },
+                    { name: 'Dexamethasone', strength: '4 mg/ml',    dose: 0.1 },
+                ]
+            },
+        ];
+
+        // ============================================================
+        // BUILD DRUG TABLES
+        // ============================================================
+        const drugSectionsContainer = document.getElementById('drug-sections');
+        drugSections.forEach((section, sIdx) => {
+            const h3 = document.createElement('h3');
+            h3.textContent = section.title;
+            drugSectionsContainer.appendChild(h3);
+
+            const table = document.createElement('table');
+            table.innerHTML = `
+                <thead>
+                    <tr>
+                        <th>Drug Name</th>
+                        <th>Strength</th>
+                        <th>Dose (mg/kg)</th>
+                        <th>Dose (ml)</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            `;
+            const tbody = table.querySelector('tbody');
+
+            section.drugs.forEach((drug, dIdx) => {
+                const tr = document.createElement('tr');
+                const rowId = `s${sIdx}_d${dIdx}`;
+                tr.innerHTML = `
+                    <td><input type="text" id="${rowId}_name"     value="${drug.name}"     readonly></td>
+                    <td><input type="text" id="${rowId}_strength" value="${drug.strength}" readonly></td>
+                    <td><input type="number" id="${rowId}_dose"   value="${drug.dose}"     step="0.01" readonly></td>
+                    <td><input type="text" id="${rowId}_doseMl"   readonly></td>
+                `;
+                tbody.appendChild(tr);
+            });
+            drugSectionsContainer.appendChild(table);
+        });
+
+        // ============================================================
+        // SECTION 1 — WEIGHT CONVERSION + DRUG DOSE RECALCULATION
+        // ============================================================
+        const weightLbsInput = document.getElementById('weightLbs');
+        const weightKgsInput = document.getElementById('weightKgs');
+        const startTimeInput = document.getElementById('startTime');
+
+        function recalcAll() {
+            const lbs = parseFloat(weightLbsInput.value) || 0;
+            const kgs = lbs / 2.20462;
+            weightKgsInput.value = lbs > 0 ? kgs.toFixed(2) : '';
+
+            // Update all drug Dose(ml) = dose (mg/kg) * weight (kg) / strength(mg/ml)
+            // But per the spec: Dose(ml) = weight(kg) * Dose
+            drugSections.forEach((section, sIdx) => {
+                section.drugs.forEach((drug, dIdx) => {
+                    const rowId = `s${sIdx}_d${dIdx}`;
+                    const doseMlEl = document.getElementById(`${rowId}_doseMl`);
+                    const ml = kgs * drug.dose;
+                    doseMlEl.value = kgs > 0 ? ml.toFixed(3) + ' ml' : '';
+                });
+            });
+
+            // Recalculate monitor "time since start" for every existing row
+            document.querySelectorAll('.monitor-body-row').forEach(row => updateElapsed(row));
+        }
+
+        weightLbsInput.addEventListener('input', recalcAll);
+        startTimeInput.addEventListener('input', recalcAll);
+
+        // ============================================================
+        // SECTION 3 — MONITORING TABLE
+        // ============================================================
+        const monitorBody = document.getElementById('monitor-body');
+
+        function addMonitorRow() {
+            const row = document.createElement('tr');
+            row.className = 'monitor-body-row';
+            row.innerHTML = `
+                <td><input type="time" class="m-time"></td>
+                <td><input type="text" class="m-step"  placeholder="Step"></td>
+                <td><input type="text" class="m-notes" placeholder="Notes"></td>
+                <td><input type="text" class="m-elapsed" readonly></td>
+            `;
+            monitorBody.appendChild(row);
+
+            row.querySelector('.m-time').addEventListener('input', () => updateElapsed(row));
+        }
+
+        function updateElapsed(row) {
+            const t = row.querySelector('.m-time').value;
+            const elapsedEl = row.querySelector('.m-elapsed');
+            const start = startTimeInput.value;
+            if (!t || !start) {
+                elapsedEl.value = '';
+                return;
+            }
+            const [sh, sm] = start.split(':').map(Number);
+            const [th, tm] = t.split(':').map(Number);
+            let startMin = sh * 60 + sm;
+            let tMin     = th * 60 + tm;
+            let diff = tMin - startMin;
+            if (diff < 0) diff += 24 * 60; // wrap past midnight
+            const hh = Math.floor(diff / 60);
+            const mm = diff % 60;
+            elapsedEl.value = `${hh}h ${String(mm).padStart(2, '0')}m`;
+        }
+
+        // Start with a few empty rows
+        for (let i = 0; i < 3; i++) addMonitorRow();
+
+        // ============================================================
+        // SUMMARY GENERATION
+        // ============================================================
+        function generateSummary() {
+            const lines = [];
+            lines.push('=================================================');
+            lines.push('    MAIN STREET HOSPITAL — ANESTHESIA RECORD');
+            lines.push('=================================================\n');
+
+            // Section 1
+            lines.push('--- PATIENT INFORMATION ---');
+            lines.push(`Client       : ${document.getElementById('client').value || '(not set)'}`);
+            lines.push(`Date         : ${document.getElementById('date').value || '(not set)'}`);
+            lines.push(`Weight (lbs) : ${weightLbsInput.value || '(not set)'}`);
+            lines.push(`Weight (kgs) : ${weightKgsInput.value || '(not set)'}`);
+            lines.push(`Start Time   : ${startTimeInput.value || '(not set)'}\n`);
+
+            // Section 2
+            lines.push('--- DRUGS ---');
+            drugSections.forEach((section, sIdx) => {
+                lines.push(`\n  [${section.title}]`);
+                section.drugs.forEach((drug, dIdx) => {
+                    const rowId = `s${sIdx}_d${dIdx}`;
+                    const name     = document.getElementById(`${rowId}_name`).value;
+                    const strength = document.getElementById(`${rowId}_strength`).value;
+                    const dose     = document.getElementById(`${rowId}_dose`).value;
+                    const doseMl   = document.getElementById(`${rowId}_doseMl`).value || '(no weight)';
+                    lines.push(`    • ${name.padEnd(16)} | Strength: ${strength.padEnd(12)} | Dose: ${dose} | Volume: ${doseMl}`);
+                });
+            });
+
+            // Section 3
+            lines.push('\n--- ANESTHESIA MONITORING ---');
+            const rows = document.querySelectorAll('.monitor-body-row');
+            let hasMonitorData = false;
+            lines.push('  Time   | Step                      | Notes                          | Elapsed');
+            lines.push('  -------+---------------------------+--------------------------------+--------');
+            rows.forEach(row => {
+                const t = row.querySelector('.m-time').value;
+                const s = row.querySelector('.m-step').value;
+                const n = row.querySelector('.m-notes').value;
+                const e = row.querySelector('.m-elapsed').value;
+                if (t || s || n) {
+                    hasMonitorData = true;
+                    lines.push(`  ${(t||'').padEnd(6)} | ${(s||'').padEnd(25)} | ${(n||'').padEnd(30)} | ${e||''}`);
+                }
+            });
+            if (!hasMonitorData) lines.push('  (no entries yet)');
+
+            lines.push('\n=================================================');
+
+            const output = document.getElementById('summary-output');
+            output.textContent = lines.join('\n');
+            output.style.display = 'block';
+        }
+
+        function copySummary() {
+            const output = document.getElementById('summary-output');
+            if (!output.textContent) {
+                alert('Generate the summary first.');
+                return;
+            }
+            navigator.clipboard.writeText(output.textContent)
+                .then(() => alert('Summary copied to clipboard!'))
+                .catch(err => alert('Copy failed: ' + err));
+        }
+
+        // Initial population
+        recalcAll();
+    </script>
+</body>
+</html>

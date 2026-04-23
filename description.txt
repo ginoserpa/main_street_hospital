@@ -1,14 +1,36 @@
-I need you to create a html file (using html and java). This file will be a form that I will describe to you . At the top I would like it to have the logo stored as "logo.png" in this directory. Then it should have 3 sections.
+I need you to create a html file (using html and java). This file will be a form that I will describe to you . 
+At the top I would like it to have the logo stored as "logo.png" in this directory. 
+Then it should have 3 sections.
 
-Section 1: In this section there should be teh following fillabe items:
-["Name", "Date", "weight(lbs)", "start time"]
+Section 1: 
+In this section there should be the following fillabe items:
+["Client", "Date", "weight(lbs)", "Start time"]
+and the following calculated items:
+["weight(kgs)"]
 
-Section 2: In this section I need to have a number of rows each row correspoding to a drug.
-for now I want the following drugs:
-["Aspirin", "Advil"]
-Each row , apart from the name of the drug should have the following columns
-["drug name", "dose", "mg"]
-of these columns the following are frozen [drug name, dose], while "mg" is calculated as: mg = dose * weight(lbs)
+Section 2: 
+This section is composed of subsections. The subsections are the following:
+['Pre-Anesthetic Drugs', 'Induction Drugs', 'Emergency Drugs']
+
+
+Each subsection needs to have a number of rows each row correspoding to a drug.
+The following describes the drugs in each subsection:
+
+The subsection 'Pre-Anesthetic Drugs' should have the following drugs:
+['Butorphanol', 'Buprenorphine'] 
+and each row drug the following columns:
+['Drug Name','Strength', 'Dose', 'Dose (ml)']
+Only the last column is calculated, the others are autopopulated.
+The 'Dose (ml)'= "weight (kgs)"*'Dose'
+
+The subsection 'Induction Drugs' should have the following drugs:
+['Propofol', 'Alfaxan'] 
+The columns should be identical than the previous section
+
+The subsection 'Emergency Drugs' should have the following drugs:
+['Atropine', 'Dexamethasone'] 
+The columns should be identical than the previous section
+
 
 Section 3:
 This section is named "Anesthesia monitoring", and has columns that will be filled succesively by the user.
