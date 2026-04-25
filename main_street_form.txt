@@ -1,0 +1,86 @@
+I would like you to create an html file(that uses html and java) that would display the following form. The form should have the logo in logo.png at the top, followed by 3 sections that I will describe below:
+
+
+* Section 1: This section should have the following items. All items are fillable by the user except the "Weight in Kgs" that will be calculated by using the "Weight in Lbs". The items can be arraged in a grid perhaps.
+
+Patient Name
+Owner First Name
+Owner Last Name
+Date
+Procedure
+Weight in Lbs
+Weight in Kgs
+Doctor
+Person who Checked patient
+Person who Who monitored
+Person who Took Dental X-Rays
+person who Scaled and polished
+Pre-anesthetic labs (yes or no)
+Lab notes
+IV Catheter (yes or no)
+IV location
+catheter size
+ET Tube size or mask
+IV fluids type and rate
+IV fluids total volume
+
+
+* Section 2 This section will have blocks (each bock denoted by a **). Each block has list of drugs (one drug per row) and occasionally a "Quality of sedation extra field" as described below. Filled cells are pre-filled while blank fields need to be calculated or filled by the user. Fields to be caculated are:
+
+
+** Pre-Anesthetic Drugs
+
+Drug                         Concentration (mg/ml)   Dose (mg/kg)   Amount (mg)    Volume (mls)      Time administered   Initials
+Butorphanol                         10
+Acepromazine                        10
+Buprenorphine                       0.5
+Other
+
+Quality of Sedation (Good, Fair Poor)               Notes
+
+** Induction Drugs
+
+Drug                        Concentration (mg/ml)   Dose (mg/kg)   Amount (mg)    Volume (mls)      Time administered   Initials
+Propofol                            10
+Midazolam                           5
+Ketamine                            100
+Alfaxan                             10
+Other
+
+Quality of Sedation (Good, Fair Poor)               Notes
+
+
+** Emergency Drugs
+
+Drug                        Concentration (mg/ml)   Dose (mg/kg)   Amount (mg)    Volume (mls)      Time administered   Initials
+Atropine                            0.54                0.2
+Dexamethasone                          4                1
+Lidocaine  2%                         20                2
+Shock fluid rate (dog)                90 ml/kg
+Shock fluid rate (cat)                50 ml/kg
+Epinephrine low Dose                   1                0.01
+Epinephrine high Dose                  1                0.1
+
+** Nerve Block
+Drug                         Concentration (mg/ml)   location 1   location 2  location 3  location 4      Time administered   Initials
+Bupivicaine                             5
+Lidocaine                               20
+
+** Drugs administered peri- and post- surgically
+
+Drug                        Concentration (mg/ml)   Dose (mg/kg)   Amount (mg)    Volume (mls)      Time administered   Initials
+Meloxicam                           0.5
+Cerenia (maropitant)                10
+Buprenorphine                       0.5
+
+
+* Section 3
+
+
+Anesthesia Monitoring
+
+Time            Iso %           HR          spO2        BP      BP Mean         Temp        End Tidal CO2
+
+Surgery Start Time                      Surgery End Time            Total Anesthesia Time
+
+Quality of Recovery: Good/Fair/Poor
