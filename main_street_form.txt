@@ -25,26 +25,28 @@ IV fluids type and rate
 IV fluids total volume
 
 
-* Section 2 This section will have blocks (each bock denoted by a **). Each block has list of drugs (one drug per row) and occasionally a "Quality of sedation extra field" as described below. Filled cells are pre-filled while blank fields need to be calculated or filled by the user. Fields to be caculated are:
-
+* Section 2 This section will have blocks (each bock denoted by a **). Each block has a list of drugs (one drug per row) and occasionally a "Quality of sedation" extra field and a "Notes" field  as described below. Filled cells are pre-filled while blank fields need to be calculated or filled by the user. Fields to be caculated are:
+        Amount = Dose* "Weight in kg"
+        Voume = Amount/Concentration
+Note that some of the Dose fields are given as range while others are absolute values
 
 ** Pre-Anesthetic Drugs
 
 Drug                         Concentration (mg/ml)   Dose (mg/kg)   Amount (mg)    Volume (mls)      Time administered   Initials
-Butorphanol                         10
-Acepromazine                        10
-Buprenorphine                       0.5
+Butorphanol                         10                  0.1
+Acepromazine                        10                 0.01-0.02
+Buprenorphine                       0.5                0.01-0.03
 Other
 
-Quality of Sedation (Good, Fair Poor)               Notes
+Quality of Sedation (Good, Fair, Poor)               Notes
 
 ** Induction Drugs
 
 Drug                        Concentration (mg/ml)   Dose (mg/kg)   Amount (mg)    Volume (mls)      Time administered   Initials
-Propofol                            10
-Midazolam                           5
-Ketamine                            100
-Alfaxan                             10
+Propofol                            10                  3-8
+Midazolam                           5                 0.03-1
+Ketamine                            100                 5
+Alfaxan                             10 0.1-0.2          2
 Other
 
 Quality of Sedation (Good, Fair Poor)               Notes
@@ -61,6 +63,8 @@ Shock fluid rate (cat)                50 ml/kg
 Epinephrine low Dose                   1                0.01
 Epinephrine high Dose                  1                0.1
 
+
+In the next block "nerve Block" all blank values are fillable
 ** Nerve Block
 Drug                         Concentration (mg/ml)   location 1   location 2  location 3  location 4      Time administered   Initials
 Bupivicaine                             5
@@ -69,18 +73,33 @@ Lidocaine                               20
 ** Drugs administered peri- and post- surgically
 
 Drug                        Concentration (mg/ml)   Dose (mg/kg)   Amount (mg)    Volume (mls)      Time administered   Initials
-Meloxicam                           0.5
-Cerenia (maropitant)                10
-Buprenorphine                       0.5
+Meloxicam                           0.5                 0.1-0.2
+Cerenia (maropitant)                10                     1
+Buprenorphine                       0.5                 0.01-0.03
 
 
 * Section 3
+In this section I am providing the column names. The user will fill one row at  time.
+The users will enter as many rows as needed.
+
+At the bottom after all the rows in anesthesia monitoring are entered there are 4 fields:
+
+Surgery Start Time: Filled
+
+Surgery End Time: Calculated as the last time in the Time column of the Anesthesia monitoring section
+
+Total Anesthesia Time: Calculated as time elapsed between the latest time Adiministered in the "Induction Drugs" section and the latest time in the
+Anesthesia monitoring section
+
+Total surgery Time: Time elapsed between "surgery start time" and "surgery end time"
 
 
 Anesthesia Monitoring
 
 Time            Iso %           HR          spO2        BP      BP Mean         Temp        End Tidal CO2
 
-Surgery Start Time                      Surgery End Time            Total Anesthesia Time
+
+
+Surgery Start Time                      Surgery End Time            Total Surgery Time      Total Anesthesia Time
 
 Quality of Recovery: Good/Fair/Poor
