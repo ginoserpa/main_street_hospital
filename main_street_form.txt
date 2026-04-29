@@ -1,4 +1,4 @@
-I would like you to create an html file(that uses html and java) that would display the following form. The form should have the logo in logo.png at the top, followed by 3 sections that I will describe below:
+I would like you to create an html file(that uses html and java) that would display the following form. The form should have the logo in logo.png (file in the current working directory) at the top, followed by 3 sections that I will describe below:
 
 
 * Section 1: This section should have the following items. All items are fillable by the user except the "Weight in Kgs" that will be calculated by using the "Weight in Lbs". The items can be arraged in a grid perhaps.
@@ -26,13 +26,13 @@ IV fluids total volume
 
 
 * Section 2 This section will have blocks (each bock denoted by a **). Each block has a list of drugs (one drug per row) and occasionally a "Quality of sedation" extra field and a "Notes" field  as described below. Filled cells are pre-filled while blank fields need to be calculated or filled by the user. Fields to be caculated are:
-        Amount = Dose* "Weight in kg"
-        Voume = Amount/Concentration
+        Amount = Concentration * "Volume Actually Administed"
+        Volume = Amount/Concentration
 Note that some of the Dose fields are given as range while others are absolute values
 
 ** Pre-Anesthetic Drugs
 
-Drug                         Concentration (mg/ml)   Dose (mg/kg)   Amount (mg)    Volume (mls)      Time administered   Initials
+Drug                         Concentration (mg/ml)   Dose (mg/kg)   Amount Administered(mg)  Volume (mls)    Volume Actually Administed      Time administered   Initials
 Butorphanol                         10                  0.1
 Acepromazine                        10                 0.01-0.02
 Buprenorphine                       0.5                0.01-0.03
@@ -42,7 +42,7 @@ Quality of Sedation (Good, Fair, Poor)               Notes
 
 ** Induction Drugs
 
-Drug                        Concentration (mg/ml)   Dose (mg/kg)   Amount (mg)    Volume (mls)      Time administered   Initials
+Drug                        Concentration (mg/ml)   Dose (mg/kg)   Amount Administered (mg)    Volume (mls)   Volume Actually Administered    Time administered   Initials
 Propofol                            10                  3-8
 Midazolam                           5                 0.03-1
 Ketamine                            100                 5
@@ -54,7 +54,7 @@ Quality of Sedation (Good, Fair Poor)               Notes
 
 ** Emergency Drugs
 
-Drug                        Concentration (mg/ml)   Dose (mg/kg)   Amount (mg)    Volume (mls)      Time administered   Initials
+Drug                        Concentration (mg/ml)   Dose (mg/kg)   Amount Administered(mg)  Volume (mls) Volume Actually Administered   Time administered   Initials
 Atropine                            0.54                0.2
 Dexamethasone                          4                1
 Lidocaine  2%                         20                2
@@ -72,7 +72,7 @@ Lidocaine                               20
 
 ** Drugs administered peri- and post- surgically
 
-Drug                        Concentration (mg/ml)   Dose (mg/kg)   Amount (mg)    Volume (mls)      Time administered   Initials
+Drug                        Concentration (mg/ml)   Dose (mg/kg)   Amount (mg)    Volume (mls)  Volume Actually Administered    Time administered   Initials
 Meloxicam                           0.5                 0.1-0.2
 Cerenia (maropitant)                10                     1
 Buprenorphine                       0.5                 0.01-0.03
@@ -93,6 +93,7 @@ Anesthesia monitoring section
 
 Total surgery Time: Time elapsed between "surgery start time" and "surgery end time"
 
+These last four fields should be calculated continiously as the information needed to calculate them becomes available.
 
 Anesthesia Monitoring
 
