@@ -519,6 +519,8 @@
 </div>
 
 <p style="margin-top:30px; text-align:center;">
+  <button type="button" id="saveBtn">Save Form</button>
+  &nbsp;&nbsp;
   <button type="button" onclick="window.print()">Print / Save as PDF</button>
 </p>
 
@@ -656,8 +658,24 @@ function addMonitorRow() {
 }
 
 addRowBtn.addEventListener('click', addMonitorRow);
-// Start with one row so the user has something to type into
-addMonitorRow();
+
+// Attach listeners to a row (works for both new and pre-existing saved rows)
+function attachRowListeners(tr) {
+  tr.querySelector('.del-row').addEventListener('click', () => {
+    tr.remove();
+    recalcSummary();
+  });
+  tr.querySelector('.mon-time').addEventListener('input', recalcSummary);
+}
+
+// Re-wire existing rows (present when a saved file is reopened)
+// or start fresh with one empty row
+const existingMonRows = monitorTbody.querySelectorAll('tr');
+if (existingMonRows.length > 0) {
+  existingMonRows.forEach(attachRowListeners);
+} else {
+  addMonitorRow();
+}
 
 /* ============== Time math ============== */
 function timeToMinutes(t) {
@@ -729,6 +747,47 @@ document.getElementById('surgStart').addEventListener('input', recalcSummary);
 document.querySelectorAll('.induction-time').forEach(inp => {
   inp.addEventListener('input', recalcSummary);
 });
+
+/* ============== Save Form ============== */
+function saveForm() {
+  // Sync all current form values into HTML attributes so they survive serialization
+  document.querySelectorAll('input').forEach(inp => {
+    if (inp.type === 'checkbox' || inp.type === 'radio') {
+      if (inp.checked) inp.setAttribute('checked', '');
+      else inp.removeAttribute('checked');
+    } else {
+      inp.setAttribute('value', inp.value);
+    }
+  });
+  document.querySelectorAll('select').forEach(sel => {
+    sel.querySelectorAll('option').forEach(opt => {
+      if (opt.value === sel.value) opt.setAttribute('selected', '');
+      else opt.removeAttribute('selected');
+    });
+  });
+  document.querySelectorAll('textarea').forEach(ta => {
+    ta.textContent = ta.value;
+  });
+
+  // Build hybrid filename: patientName_YYYY-MM-DD_shortUUID
+  const raw = document.getElementById('patientName').value.trim() || 'Unknown';
+  const date = document.getElementById('date').value || new Date().toISOString().slice(0, 10);
+  const uid  = crypto.randomUUID().slice(0, 8);
+  const safe = raw.replace(/[<>:"/\\|?*]/g, '').replace(/\s+/g, '_');
+  const filename = `anesthesia_${safe}_${date}_${uid}.html`;
+
+  // Serialize and trigger download
+  const html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+  const blob = new Blob([html], { type: 'text/html' });
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  a.href     = url;
+  a.download = filename;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+document.getElementById('saveBtn').addEventListener('click', saveForm);
 
 /* Initial calculation */
 recalcAllDrugs();
